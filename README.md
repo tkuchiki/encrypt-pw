@@ -43,6 +43,14 @@ $ ./encrypt-pw -r 100000 -p your-password
 $6$rounds=100000$g9EPi5gIxSX2cpMR$UVIstanJwu4uCtNpW1HIdQmu.Y4yPm9HzVL1mcwoz0E87Gn0FI7AunYy5wOQ8FBArwlIQc6N6YZITsDW6aZZh/
 ```
 
+## Build
+
+```
+$ go get
+$ cp -a src/github.com/jeramey/go-pwhash/* src/antihe.ro/pwhash/`
+$ go build
+```
+
 ## Dependency
 
 This software includes the work that is distributed in the Apache License 2.0.
