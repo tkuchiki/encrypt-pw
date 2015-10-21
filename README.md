@@ -49,6 +49,10 @@ This software includes the work that is distributed in the Apache License 2.0.
 
 - https://github.com/bgentry/speakeasy
 
+This software includes the work that is distributed in the 2-clause BSD License
+
+- https://github.com/jeramey/go-pwhash
+
 This software includes the work that is distributed in the MIT License
 
 - https://github.com/Sirupsen/logrus
