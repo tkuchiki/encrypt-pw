@@ -3,14 +3,14 @@ package main
 import (
 	"errors"
 	"fmt"
+	"bytes"
 	"github.com/Sirupsen/logrus"
 	"github.com/bgentry/speakeasy"
-	"github.com/jeramey/go-pwhash/md5_crypt"
-	"github.com/jeramey/go-pwhash/sha256_crypt"
-	"github.com/jeramey/go-pwhash/sha512_crypt"
+	"github.com/GehirnInc/crypt/md5_crypt"
+	"github.com/GehirnInc/crypt/sha256_crypt"
+	"github.com/GehirnInc/crypt/sha512_crypt"
+	"github.com/GehirnInc/crypt/common"
 	"gopkg.in/alecthomas/kingpin.v2"
-	"math/rand"
-	"time"
 )
 
 const (
@@ -63,25 +63,32 @@ func ConfirmPassword() (passwd string, err error) {
 	return passwd, err
 }
 
-func MD5Crypt(password string) string {
-	rand.Seed(time.Now().UnixNano())
-	salt := md5_crypt.GenerateSalt(8)
-
-	return md5_crypt.Crypt(password, salt)
+func MD5Crypt(password string) (string, error) {
+	return md5_crypt.New().Generate([]byte(password), []byte{})
 }
 
-func Sha256Crypt(password string, rounds int) string {
-	rand.Seed(time.Now().UnixNano())
-	salt := sha256_crypt.GenerateSalt(16, rounds)
-
-	return sha256_crypt.Crypt(password, salt)
+func Sha256Crypt(password string, rounds int) (string, error) {
+	salt := common.Salt{
+		MagicPrefix:   []byte(sha256_crypt.MagicPrefix),
+		SaltLenMin:    sha256_crypt.SaltLenMin,
+		SaltLenMax:    sha256_crypt.SaltLenMax,
+		RoundsDefault: sha256_crypt.RoundsDefault,
+		RoundsMin:     sha256_crypt.RoundsMin,
+		RoundsMax:     sha256_crypt.RoundsMax,
+	}
+	return sha256_crypt.New().Generate([]byte(password), salt.GenerateWRounds(sha256_crypt.SaltLenMax, rounds))
 }
 
-func Sha512Crypt(password string, rounds int) string {
-	rand.Seed(time.Now().UnixNano())
-	salt := sha512_crypt.GenerateSalt(16, rounds)
-
-	return sha512_crypt.Crypt(password, salt)
+func Sha512Crypt(password string, rounds int) (string, error) {
+	salt := common.Salt{
+		MagicPrefix:   []byte(sha512_crypt.MagicPrefix),
+		SaltLenMin:    sha512_crypt.SaltLenMin,
+		SaltLenMax:    sha512_crypt.SaltLenMax,
+		RoundsDefault: sha512_crypt.RoundsDefault,
+		RoundsMin:     sha512_crypt.RoundsMin,
+		RoundsMax:     sha512_crypt.RoundsMax,
+	}
+	return sha512_crypt.New().Generate([]byte(password), salt.GenerateWRounds(sha512_crypt.SaltLenMax, rounds))
 }
 
 var (
@@ -124,10 +131,22 @@ func main() {
 
 	switch *hash {
 	case "sha512":
-		fmt.Println(Sha512Crypt(pass, *rounds))
+		hash, err := Sha512Crypt(pass, *rounds)
+		if err != nil {
+			log.Fatal(err)
+		}
+		fmt.Println(hash)
 	case "sha256":
-		fmt.Println(Sha256Crypt(pass, *rounds))
+		hash, err := Sha256Crypt(pass, *rounds)
+		if err != nil {
+			log.Fatal(err)
+		}
+		fmt.Println(hash)
 	case "md5":
-		fmt.Println(MD5Crypt(pass))
+		hash, err := MD5Crypt(pass)
+		if err != nil {
+			log.Fatal(err)
+		}
+		fmt.Println(hash)
 	}
 }
