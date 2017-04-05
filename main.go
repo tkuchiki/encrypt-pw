@@ -3,7 +3,6 @@ package main
 import (
 	"errors"
 	"fmt"
-	"bytes"
 	"github.com/Sirupsen/logrus"
 	"github.com/bgentry/speakeasy"
 	"github.com/GehirnInc/crypt/md5_crypt"
