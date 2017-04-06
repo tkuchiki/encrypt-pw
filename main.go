@@ -3,12 +3,12 @@ package main
 import (
 	"errors"
 	"fmt"
-	"github.com/Sirupsen/logrus"
-	"github.com/bgentry/speakeasy"
+	"github.com/GehirnInc/crypt/common"
 	"github.com/GehirnInc/crypt/md5_crypt"
 	"github.com/GehirnInc/crypt/sha256_crypt"
 	"github.com/GehirnInc/crypt/sha512_crypt"
-	"github.com/GehirnInc/crypt/common"
+	"github.com/Sirupsen/logrus"
+	"github.com/bgentry/speakeasy"
 	"gopkg.in/alecthomas/kingpin.v2"
 )
 
@@ -99,7 +99,7 @@ var (
 
 func main() {
 	kingpin.CommandLine.Help = "Encrypts password (starts from $1$, $5$, $6$ hash)"
-	kingpin.Version("0.0.1")
+	kingpin.Version("0.0.2")
 	kingpin.Parse()
 
 	var pass string
