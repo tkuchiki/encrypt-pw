@@ -47,7 +47,6 @@ $6$rounds=100000$g9EPi5gIxSX2cpMR$UVIstanJwu4uCtNpW1HIdQmu.Y4yPm9HzVL1mcwoz0E87G
 
 ```
 $ go get
-$ cp -a src/github.com/jeramey/go-pwhash/* src/antihe.ro/pwhash/`
 $ go build
 ```
 
