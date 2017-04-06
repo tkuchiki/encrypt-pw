@@ -59,7 +59,7 @@ This software includes the work that is distributed in the Apache License 2.0.
 
 This software includes the work that is distributed in the 2-clause BSD License
 
-- https://github.com/jeramey/go-pwhash
+- https://github.com/GehirnInc/crypt
 
 This software includes the work that is distributed in the MIT License
 
