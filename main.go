@@ -7,7 +7,7 @@ import (
 	"github.com/GehirnInc/crypt/md5_crypt"
 	"github.com/GehirnInc/crypt/sha256_crypt"
 	"github.com/GehirnInc/crypt/sha512_crypt"
-	"github.com/Sirupsen/logrus"
+	"github.com/sirupsen/logrus"
 	"github.com/bgentry/speakeasy"
 	"gopkg.in/alecthomas/kingpin.v2"
 )
